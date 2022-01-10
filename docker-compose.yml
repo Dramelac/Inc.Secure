@@ -1,0 +1,18 @@
+version: '3'
+services:
+    web:
+        image: webproject
+        build: ./services/web/.
+        depends_on:
+            - db
+        links:
+            - db
+        ports:
+            - 80:80
+
+    db:
+        image: mariadb:10.3
+        volumes:
+          - "./services/db/sql/:/docker-entrypoint-initdb.d/:ro"
+        environment:
+            MYSQL_ROOT_PASSWORD: changeme
